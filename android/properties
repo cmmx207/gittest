@@ -1,0 +1,7 @@
+key.store=src/main/signature/cmcc-shmc.keystore
+key.store.password=cmvideo8
+key.alias=alias_name
+key.alias.password=cmvideo8
+
+versionCode=40000000
+versionName=4.0.0.0

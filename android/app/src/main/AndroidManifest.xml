@@ -1,0 +1,101 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bestv.mishitong.flamingo">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:name="com.wondertek.MyApplication"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher">
+        <activity
+            android:name="com.wondertek.activity.AppFakeActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
+                android:value="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="miguvideo"
+                    android:scheme="miguvideo" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="miguvideo"
+                    android:scheme="miguvideo" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.action.miguvideo.js" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="miguvideo"
+                    android:scheme="miguvideo" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.action.miguvideo.js" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- SSO SDK BEGIN -->
+        <activity
+            android:name="com.cmcc.migusso.sdk.homesdk.login.HomeLoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.cmcc.migusso.sdk.homesdk.HomeRegisterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape" />
+
+        <service
+            android:name="com.cmcc.migusso.service.SsoService"
+            android:process=":MiguSsoService" />
+
+        <receiver
+            android:name="com.wondertek.mishitong.ott.receiver.CmccSsoReceiver"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="com.cmcc.migusso.ACTION_UNIONAUTH" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.cmcc.sso.APP_ID"
+            android:value="20301901" />
+        <meta-data
+            android:name="com.cmcc.sso.APP_KEY"
+            android:value="D7E60573DB28F3DF" />
+        <!-- SSO SDK END -->
+
+        <!-- AMBER SERVICE BEGIN -->
+        <service android:name="com.migu.uem.comm.AgentService"
+            android:process=":AgentService"/>
+        <!-- AMBER SERVICE END -->
+
+    </application>
+</manifest>

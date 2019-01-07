@@ -1,0 +1,84 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+apply plugin: 'com.android.application'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+def keystoreFilePath = ''
+def keystorePSW = ''
+def keystoreAlias = ''
+def keystoreAliasPSW = ''
+def keyFile = file('s.keystore.temp')
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('properties').newDataInputStream())
+keystoreFilePath = properties.getProperty("key.store")
+
+if (keystoreFilePath) {
+    keystorePSW = properties.getProperty("key.store.password")
+    keystoreAlias = properties.getProperty("key.alias")
+    keystoreAliasPSW = properties.getProperty("key.alias.password")
+    keyFile = file(keystoreFilePath)
+}
+
+def code = properties.getProperty('versionCode')
+def name = properties.getProperty('versionName')
+if (code == null) {
+    code = '1'
+    name = '1.0'
+}
+
+android {
+    compileSdkVersion 27
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    defaultConfig {
+        applicationId "com.bestv.mishitong.ott"
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode code.toInteger()
+        versionName name
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        ndk {
+//            abiFilters "armeabi-v7a"
+//        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile keyFile
+            keyAlias keystoreAlias
+            storePassword keystorePSW
+            keyPassword keystoreAliasPSW
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
