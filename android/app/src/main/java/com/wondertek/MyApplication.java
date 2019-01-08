@@ -25,6 +25,7 @@ public class MyApplication extends FlutterApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+		Log.d("cjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
         Log.d("WriteLogs", "MyApplication onCreate");
         appPath = getAppAbsPath();
         Util.Trace("appPath is " + appPath);
